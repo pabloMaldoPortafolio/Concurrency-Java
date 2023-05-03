@@ -15,7 +15,7 @@ This is an introduction to Concurrency using Java<br />
 <h2>Why would we use multiple thread in our application?</h2>
 
 <p>Sometimes, we want to perform a task that’s going to take a long time, we could use the main thread to do so, but the code within the main thread execute in a linear fashion, meaning that the rest of the code will have to wait for the task to be finish to execute. Another reason is because an API requires us to provide one. Sometimes we have to provide the code that will run when a method we have called reaches a certain point. </p>
-<p>However, it not all good news, there may be some problems that rise when using multiple threads, such as a DeadLock. A deadlock is when all processes are waiting for an event which another process in the same set hast to cause. For example, Thread A is waiting for Thread B, but at the same time, Thread B is waiting for Thread A, in this case, both thread will be stuck for ever and non of them will ever finish. We will se an example of this later in this guide. 
+<p>However, it's not all good news, there may be some problems that rise when using multiple threads, such as a DeadLock. A deadlock is when all processes are waiting for an event which another process in the same set hast to cause. For example, Thread A is waiting for Thread B, but at the same time, Thread B is waiting for Thread A, in this case, both thread will be stuck for ever and non of them will ever finish. We will se an example of this later in this guide. 
 </p>
 
 <h2>How to create a Thread.</h2>

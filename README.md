@@ -149,5 +149,5 @@ Note: notice that we need to use try-finally block, this is the recommended way 
     
 **Exercice Four: ThreadExampleTwoDeadLock   class**  
  <p>As I said before, one problem with threads is that we can create deadlocks, deadlocks is when …
-In the class ThreadExampleTwoDeadLock this is a possible path that the threads can take: </p>
+In the class ThreadExampleTwoDeadLock this is a possible path that the threads can takeasd: </p>
     

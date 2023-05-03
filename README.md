@@ -72,7 +72,82 @@ runnableThread.start();
 
 <h2>Thread Exercices: </h2>
 
- **Exercice one: ThreadExampleOne class**  
+ **Exercice One: ThreadExampleOne class**  
 <p>Using BankAccount class (given) with a balance of 1000, let’s create two threads, one thread will deposit 300 and then withdraw 50; The second thread will deposit 200 and then withdraw 100 </p>
 
+```java
+public class ThreadExampleOne {
+    public static void main(String[] args){
 
+        BankAccount account = new BankAccount("123-456", 1000.00);
+
+        Thread thread1 = new Thread(){
+            public void run(){
+                account.deposit(300.00);
+                account.withdraw(50.00);
+            }
+        };
+
+        Thread thread2 = new Thread(){
+            public void run(){
+                account.deposit(200.00);
+                account.withdraw(100.00);
+            }
+        };
+        thread1.start();
+        thread2.start();
+    }
+}
+```
+In this class we can see how to inititate 2 threads using nested classes and then starting them. You may have notice that this way of using threads can cause problems, one problem of using threads is that one thread can access a method at the same time as the other thread, this could cause huge problems in the code. To solve that we can creat Thread Safe methods or block code, where one thread will have to wait until the other thread is done with the method or block code. 
+
+**Exercice Two: BankAccountThreadSafe class**  
+<p> Let’s make exercise one ThreadSafe, where one thread will wait for the other thread to be done to work on BankAccount. There are 2 ways that we can solve this execrice</p>
+<p> 1) Using the word “synchronized” in a methods name, this makes the method able to be used only by one thread at the time. If a second thread wants to use the same method, this thread will wait until the first thread is finished. This will make the whole method syncronized</p>
+
+```java
+//synchronized whole method
+    public synchronized void deposit(double amount) {
+        balance += amount;
+    }
+```
+<p>2) Sometimes we do not want to synchronized, and we want just a specific block code to be synchronized, to do so we can use the synchronized() method <\p>
+
+```java
+    //synchronized only block code
+    public  void withdraw(double amount) {
+        synchronized (this){
+            balance -= amount;
+        }
+    }
+```
+    
+**Exercice Three: BankAccountReentrantLock class**  
+    
+Another way to synchronize a method is by using ReentrantLock. To use ReentrantLock we need to create a lock object and use it to lock() the block code, once the block code runs, we need to unlock() the block code so another thread can use it.
+    
+```java
+     public void deposit(double amount) {
+       lock.lock();
+       try{
+           balance += amount;
+       } finally {
+            lock.unlock();
+       }
+    }
+    
+     public  void withdraw(double amount) {
+        lock.lock();
+        try{
+            balance -= amount;
+        } finally {
+            lock.unlock();
+        }
+    }
+```
+Note: notice that we need to use try-finally block, this is the recommended way to use locks. We also need to create a class variable Lock which also needs to be Instantiated in the constructor 
+    
+**Exercice Four: ThreadExampleTwoDeadLock   class**  
+ <p>As I said before, one problem with threads is that we can create deadlocks, deadlocks is when …
+In the class ThreadExampleTwoDeadLock this is a possible path that the threads can take: </p>
+    

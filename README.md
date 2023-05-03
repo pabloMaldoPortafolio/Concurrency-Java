@@ -15,7 +15,7 @@ This is an introduction to Concurrency using Java<br />
 <h2>Why would we use multiple thread in our application?</h2>
 
 <p>Sometimes, we want to perform a task that’s going to take a long time, we could use the main thread to do so, but the code within the main thread execute in a linear fashion, meaning that the rest of the code will have to wait for the task to be finish to execute. Another reason is because an API requires us to provide one. Sometimes we have to provide the code that will run when a method we have called reaches a certain point. </p>
-<p>However, it's not all good news, there may be some problems that rise when using multiple threads, such as a DeadLock. A deadlock is when all processes are waiting for an event which another process in the same set hast to cause. For example, Thread A is waiting for Thread B, but at the same time, Thread B is waiting for Thread A, in this case, both thread will be stuck for ever and non of them will ever finish. We will se an example of this later in this guide. 
+<p>However, it not all good news, there may be some problems that rise when using multiple threads, such as a DeadLock. A deadlock is when all processes are waiting for an event which another process in the same set hast to cause. For example, Thread A is waiting for Thread B, but at the same time, Thread B is waiting for Thread A, in this case, both thread will be stuck for ever and non of them will ever finish. We will se an example of this later in this guide. 
 </p>
 
 <h2>How to create a Thread.</h2>
@@ -147,7 +147,16 @@ Another way to synchronize a method is by using ReentrantLock. To use ReentrantL
 ```
 Note: notice that we need to use try-finally block, this is the recommended way to use locks. We also need to create a class variable Lock which also needs to be Instantiated in the constructor 
     
-**Exercice Four: ThreadExampleTwoDeadLock   class**  
- <p>As I said before, one problem with threads is that we can create deadlocks, deadlocks is when …
-In the class ThreadExampleTwoDeadLock this is a possible path that the threads can takeasd: </p>
+**Exercice Four: ThreadExampleTwoDeadLock class**  
+ <p>As I said before, one problem with threads is that we can create deadlocks, deadlocks is when two or more threads are waiting for each other, as all of them are waiting, none of them will release the lock so the other can continue executing.
+In the class ThreadExampleTwoDeadLock (see ThreadExampleTwoDeadLock class), this is a possible path that the threads can take: </p>
+ 
+1.	The Tutor thread calls tutor.studyTime()
+2.  The tutor thread get the lock for the Tutor object (because studyTime() is synchronized). It prits “Tutor Arrived” and waits for the student, which we have simulated by calling sleep()
+3.	The Student thread runs and calls hnadInAssigment(). Since the method is synchronized, it gets the lock for the Student object. It calls tutor.getProgressReport(), but Tutor thread is holding the lock for the tutor object, so the student thread block. 
+4.	The tutor thread wakes up and runs, and calls student.stratStudy(). But the method is synchronized, and the Student thread is holding the lock for the Student object, so the Tutor Thread blocks.
     
+Here we have a deadlock, neither thread will ever release the lock that the other thread is waiting for.  
+ <p>Solution for the program above: In the real world, the answer here is “it depends”, we should study the code and analyze the best solution, for example we can over-synchronize every method, but maybe that would be too expensive for the computer so we may just want to synchronize critical block code. Another solution it may be to rewrite the code so tutor and student object don’t call each other in a circular fashion. Another solution may be that, we can use ReentrantLock and tryLock() with a time value. So if the tryLock method times out, the thread wouldn’t be able to execute the critical section of code, but at least the application wouldn’t be deadlocked. Also, a thread could release any locks it’s holding when the tryLock() times out, allowing any threads waiting for those locks to run successfully  </p>
+
+

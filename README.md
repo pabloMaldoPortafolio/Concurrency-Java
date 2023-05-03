@@ -71,5 +71,8 @@ runnableThread.start();
 <p></p> 
 
 <h2>Thread Exercices: </h2>
-**Exercice one:**  Using BankAccount class (given) with a balance of 1000, let’s create two threads, one thread will deposit 300 and then withdraw 50; The second thread will deposit 200 and then withdraw 100 
+
+ **Exercice one: ThreadExampleOne class**  
+<p>Using BankAccount class (given) with a balance of 1000, let’s create two threads, one thread will deposit 300 and then withdraw 50; The second thread will deposit 200 and then withdraw 100 </p>
+
 

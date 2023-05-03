@@ -20,10 +20,10 @@ This is an introduction to Concurrency using Java<br />
 
 <h2>How to create a Thread.</h2>
 
-- Windows 10</b> (21H2)
 <p>There are many ways to create threads:</p> 
-<p>	one method is by creating a class that extends Thread as seen below, note that you MUST implement run().  </p>
-```
+<p>	1) One method is by creating a class that extends Thread as seen below, note that you MUST implement run().  </p>
+
+```Java
 public class AnotherThread extends Thread {
     @Override
     public void run(){
@@ -31,6 +31,45 @@ public class AnotherThread extends Thread {
     }
 }
 ```
+<p>now if we want to run the thread on main we would use:</p> 
+
+```Java
+Thread anotherThread = new AnotherThread();
+anotherThread.start();
+```
+
+<p>^Note that we use method “start” to start run method, and not run itself. </p> 
+
+<p>2) Create an anonymous class as seen below: </p> 
+
+```Java
+new Thread(){
+    public void run(){
+        System.out.println("Hello from anonymous class thread");
+    }
+}.start();
+```
+note that we need to finish anonymous class with .start() to the thread can run.
+
+<p>3) Create a class that implements Runnable: </p> 
+
+```Java
+class AnotherThread implements Runnable {
+    @Override
+    public void run(){
+        System.out.println("Hello from Another Thread using Runnable");
+    }
+}
+```
+now we can start that thread in main using: 
+
+```Java
+Thread runnableThread = new Thread(new AnotherThread());
+runnableThread.start();
+```
+
+<p></p> 
+
 
 
 <h2>List of Prerequisites</h2>
